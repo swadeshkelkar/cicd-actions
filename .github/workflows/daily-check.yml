@@ -1,0 +1,16 @@
+name: Daily Check
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hello
+        run: echo "Starting check"
+      - name: Two lines
+        run: |
+          echo "Step A"
+          echo "Step B"
