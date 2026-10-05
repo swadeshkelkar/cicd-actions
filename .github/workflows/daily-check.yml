@@ -3,6 +3,7 @@ name: Daily Check
 on:
   push:
     branches: [main]
+  workflow_dispatch: 
 
 jobs:
   check:
@@ -14,3 +15,5 @@ jobs:
         run: |
           echo "Step A"
           echo "Step B"
+      - name: Print event trigger
+        run: echo "Started by ${{github.event_name}}"
