@@ -18,6 +18,7 @@ jobs:
       - name: Print event trigger
         run: echo "Started by ${{github.event_name}}"
   second:
+    needs: check
     runs-on: ubuntu-latest
     steps:
       - run: echo "Second job"
