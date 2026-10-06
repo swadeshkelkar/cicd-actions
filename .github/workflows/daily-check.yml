@@ -17,3 +17,7 @@ jobs:
           echo "Step B"
       - name: Print event trigger
         run: echo "Started by ${{github.event_name}}"
+  second:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Second job"
