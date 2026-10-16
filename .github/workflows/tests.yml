@@ -9,7 +9,12 @@ on:
 
 jobs:
   test:
+    env: 
+      SAMPLE_VARIABLE: "env1"
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        py-version: ["3.11", "3.12", "3.13"]
     steps:
       - name: Get the code
         uses: actions/checkout@v4
@@ -17,7 +22,14 @@ jobs:
       - name: Install Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: ${{matrix.py-version}}
+          cache: pip
+        
+      - name: Print environment variable
+        run: echo $SAMPLE_VARIABLE
+
+      - name: Print secret
+        run: echo ${{secrets.DEMO_SECRET}}
 
       - name: Install test tool
         run: pip install pytest
