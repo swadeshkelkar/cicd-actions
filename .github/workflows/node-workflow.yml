@@ -1,0 +1,19 @@
+name: Node Workflow
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: poll-api
+    steps:
+      - run: actions/checkout@v4
+      - run: | 
+          docker build \
+          -t $IMAGE_NAME:${{github.sha}} \
+          -t $IMAGE_NAME:latest
+          .
+      - run: docker run $IMAGE_NAME:${{github.sha}} npm test
