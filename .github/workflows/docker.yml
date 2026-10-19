@@ -14,7 +14,7 @@ jobs:
         name: Get code
       - run: docker build -t ${IMAGE_NAME}:latest -t ${IMAGE_NAME}:${{github.sha}} .
         name: Build image
-      - run: docker show images
+      - run: docker images
         name: List Images
       - run: docker run --rm ${IMAGE_NAME}:latest
         name: Run the container with the build image
