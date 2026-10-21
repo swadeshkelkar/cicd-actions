@@ -27,6 +27,6 @@ jobs:
         name: Login to github docker registry
       - if: github.event_name == 'push'
         run: |
-          github push -t $IMAGE:latest
-          github push -t $IMAGE:${{github.sha}}
+          docker push -t $IMAGE:latest
+          docker push -t $IMAGE:${{github.sha}}
         name: Push image to registry
