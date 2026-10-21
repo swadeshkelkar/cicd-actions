@@ -8,7 +8,7 @@ permissions:
   contents: read
   packages: write
 jobs:
-  build-and-test:
+  build-test-push:
     runs-on: ubuntu-latest
     env:
       IMAGE: ghcr.io/swadeshkelkar/calc
