@@ -1,9 +1,12 @@
-name: Build and run pipeline
+name: Build, Run and Push Pipeline
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
+permissions:
+  contents: read
+  packages: write
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
