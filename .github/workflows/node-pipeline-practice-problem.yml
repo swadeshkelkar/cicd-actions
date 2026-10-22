@@ -1,0 +1,61 @@
+name: Container Pipeline
+
+on:
+  workflow_dispatch:
+
+# Default for ALL jobs: read-only
+permissions:
+  contents: read
+
+env:
+  IMAGE: ghcr.io/swadeshkelkar/poll-api
+
+jobs:
+  # ---------- Job 1: lint ----------
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install flake8
+      - run: flake8 .
+
+  # ---------- Job 2: test inside the image ----------
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          load: true
+          cache-from: type=gha
+          cache-to: type=gha, mode=max
+          tags: poll-api:latest
+      - run: docker run poll-api npm test
+  publish:
+    needs: [lint,test]
+    if: github.event_name == 'push'
+    permissions:
+      packages: write
+      contents: read
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          username: ${{github.actor}}
+          password: ${{secrets.GITHUB_TOKEN}}
+          registry: ghcr.io
+      - uses: docker/build-push-action@v6
+        with:
+          push: true
+          context: .
+          tags: |
+            ${{env.IMAGE}}:${{github.sha}}
+            ${{env.IMAGE}}:latest
+          cache-from: type=gha
