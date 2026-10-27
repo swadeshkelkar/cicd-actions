@@ -1,9 +1,6 @@
 name: Lint, Test and Push Pipeline #this is a multi job pipeline with docker actions
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+  workflow_dispatch: 
 permissions:
   contents: read
 env:
