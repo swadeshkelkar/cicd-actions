@@ -1,8 +1,13 @@
 name: Multi Environment Pipeline
 on:
   workflow_dispatch:
+  push:
+    branches: main
 jobs:
   build:
+    permissions:
+      contents: read
+      packages: write
     runs-on: ubuntu-latest
     environment: dev
     env:
