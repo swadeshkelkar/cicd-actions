@@ -39,7 +39,7 @@ jobs:
     environment: production
     steps:
       - run: echo "10% traffic"
-      - run: exit 0
+      - run: exit 1
   full-rollout:
     needs: [canary, build]
     runs-on: ubuntu-latest
