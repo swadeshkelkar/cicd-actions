@@ -1,0 +1,12 @@
+name: Rollback
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        required: true
+jobs:
+  rollback:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "Rollback to version ${{inputs.version}}
