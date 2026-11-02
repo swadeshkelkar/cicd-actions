@@ -19,10 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: |
-          docker build . \
-          -t ${IMAGE}:${{github.ref_name}}
-          -t ${IMAGE}:${{github.ref_name}}
+      - run: docker build -t ${IMAGE}:${{github.ref_name}} -t ${IMAGE}:${{github.ref_name}} .
     outputs:
       version: ${{github.ref_name}}
   deploy-staging:
