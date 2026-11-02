@@ -28,7 +28,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: echo "Deploy in staging environment version ${{needs.build.outputs.version}}"
-      - run: exit 0
+      - run: exit 1
   deploy-production:
     needs: [deploy-staging, build]
     environment: production
