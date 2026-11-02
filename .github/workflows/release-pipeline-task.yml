@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: |
-          docker build \
+          docker build . \
           -t ${IMAGE}:${{github.ref_name}}
           -t ${IMAGE}:${{github.ref_name}}
     outputs:
