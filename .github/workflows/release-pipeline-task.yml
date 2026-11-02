@@ -1,0 +1,50 @@
+name: Release Pipeline
+on:
+  push:
+    tags:
+      - "v*"
+env:
+  IMAGE: ghcr.io/swadeshkelkar/calc-app
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          cache: pip
+      - run: pip install -r requirements.txt
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          docker build \
+          -t ${IMAGE}:${{github.ref_name}}
+          -t ${IMAGE}:${{github.ref_name}}
+    outputs:
+      version: ${{github.ref_name}}
+  deploy-staging:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "Deploy in staging environment version ${{needs.build.outputs.version}}"
+      - run: exit 0
+  deploy-production:
+    needs: [deploy-staging, build]
+    environment: production
+    runs-on: ubuntu-latest
+    concurrency:
+      group: release
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "Deploy in production environment version ${{needs.build.outputs.version}}"
+  production-rollback:
+    needs: [build, deploy-production]
+    if: failure() && needs.deploy-production.result == 'failure'
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Deploy in production environment version previous"
