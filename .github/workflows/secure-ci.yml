@@ -1,4 +1,4 @@
-name: Secure CI
+name: Secure CI workflow
 on:
   pull_request:
     branches: main
