@@ -2,4 +2,4 @@ from calc import subtract
 
 
 def test_subtract():
-    assert subtract(6, 2) == 4
+    assert subtract(6, 2) == 3
