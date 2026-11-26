@@ -54,8 +54,8 @@ jobs:
         with:
           context: .
           cache-from: type=gha
-          cache-to: type=gha, mode=max
-          tags: $IMAGE:${{github.sha}}
+          cache-to: type=gha,mode=max
+          tags: ${{env.IMAGE}}:${{github.sha}}
           push: true
   deploy-staging:
     needs: build
