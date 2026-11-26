@@ -75,9 +75,7 @@ jobs:
       group: production
       cancel-in-progress: false
     steps:
-      - run: |
-          echo "Deploying $IMAGE:${{github.sha}} to production environment"
-          exit 1
+      - run: echo "Deploying $IMAGE:${{github.sha}} to production environment"
   production-rollback:
     needs: deploy-production
     if: failure() && needs.deploy-production.result == 'failure'
