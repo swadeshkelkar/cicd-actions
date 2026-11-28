@@ -71,6 +71,7 @@ jobs:
           push: true
 
   smoke-test:
+    needs: build
     runs-on: ubuntu-latest
     permissions:
       packages: read
