@@ -85,7 +85,7 @@ jobs:
       - run: |
           docker pull $IMAGE:${{github.sha}}
           docker run --rm $IMAGE:${{github.sha}} \
-            python -c "from calc import add; assert subtract(6,4)==2; print('Smoke test passed');"
+            python -c "from calc import subtract; assert subtract(6,4)==2; print('Smoke test passed');"
             
   deploy-staging:
     needs: smoke-test
